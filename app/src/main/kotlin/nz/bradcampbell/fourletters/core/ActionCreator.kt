@@ -1,31 +1,31 @@
 package nz.bradcampbell.fourletters.core
 
 import nz.bradcampbell.fourletters.R
+import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 public class ActionCreator @Inject constructor(val store: Store, val wordRepository: WordRepository) {
 
     public fun initiateGame() {
-        store.dispatch(Action.Navigate(Page(R.layout.game)))
+        val startTime = System.currentTimeMillis()
+        store.dispatch(Action.Navigate(Page(R.layout.loading)))
         wordRepository.getRandomWord()
+            // Show loading for at least 500ms
+            .delay(500 - (System.currentTimeMillis() - startTime), TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
+                store.dispatch(Action.Navigate(Page(R.layout.game), false))
                 store.dispatch(Action.InitGame( it ))
             }
     }
 
     public fun playAgain() {
-        wordRepository.getRandomWord()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                store.dispatch(Action.Back)
-                store.dispatch(Action.Navigate(Page(R.layout.game)))
-                store.dispatch(Action.InitGame( it ))
-            }
+        store.dispatch(Action.Back)
+        initiateGame()
     }
 
     public fun tick() {
