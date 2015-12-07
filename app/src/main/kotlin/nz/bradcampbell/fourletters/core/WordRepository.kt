@@ -27,10 +27,10 @@ class WordRepository @Inject constructor(val app: Application) {
     }
 
     private fun getAllPossibleWords(letters: String): Observable<List<String>> {
-        val sortedLetters = letters.toSortedSet()
+        val sortedLetters = letters.sort()
         val result = ArrayList<String>()
         for (word in wordsCache) {
-            if (sortedLetters == word.toSortedSet()) {
+            if (sortedLetters == word.sort()) {
                 result.add(word)
             }
         }
@@ -67,6 +67,12 @@ fun String.shuffle(): String {
         oldStr = oldStr.removeRange(i, i + 1)
     }
     return newStr;
+}
+
+fun String.sort(): String {
+    val sortedLetters = toCharArray()
+    sortedLetters.sort()
+    return String(sortedLetters)
 }
 
 public data class Word(val letters: List<Letter>, val possibleAnswers: List<String>)

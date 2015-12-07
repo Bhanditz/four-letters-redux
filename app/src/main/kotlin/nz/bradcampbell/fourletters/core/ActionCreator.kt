@@ -1,7 +1,6 @@
 package nz.bradcampbell.fourletters.core
 
 import nz.bradcampbell.fourletters.R
-import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
