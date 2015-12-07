@@ -4,9 +4,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/padding_standard"
     >
     <TextView
         android:id="@+id/answer"
+        android:textSize="48sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
@@ -16,27 +18,25 @@
         android:layout_height="wrap_content"
         />
     <Button
-        android:id="@+id/leftLetter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/topLetter"
+        android:layout_marginTop="@dimen/padding_standard"
+        style="@style/Letter"
         />
     <Button
-        android:id="@+id/topLetter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/leftLetter"
+        style="@style/Letter"
         />
     <Button
         android:id="@+id/rightLetter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Letter"
         />
     <Button
         android:id="@+id/bottomLetter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Letter"
         />
     <TextView
         android:id="@+id/timeRemaining"
+        android:layout_marginTop="@dimen/padding_standard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
