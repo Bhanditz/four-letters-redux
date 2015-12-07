@@ -1,17 +1,23 @@
 package nz.bradcampbell.fourletters.core
 
 import nz.bradcampbell.fourletters.R
+import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import rx.subscriptions.Subscriptions
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 public class ActionCreator @Inject constructor(val store: Store, val wordRepository: WordRepository) {
+    private var initGameSubscription: Subscription = Subscriptions.empty()
+    private var checkWinSubscription: Subscription = Subscriptions.empty()
 
     public fun initiateGame() {
         val startTime = System.currentTimeMillis()
         store.dispatch(Action.Navigate(Page(R.layout.loading)))
-        wordRepository.getRandomWord()
+        initGameSubscription = wordRepository.getRandomWord()
             // Show loading for at least 500ms
             .delay(500 - (System.currentTimeMillis() - startTime), TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
@@ -32,7 +38,11 @@ public class ActionCreator @Inject constructor(val store: Store, val wordReposit
         checkLose()
     }
 
-    public fun back() = store.dispatch(Action.Back)
+    public fun back() {
+        initGameSubscription.unsubscribe()
+        checkWinSubscription.unsubscribe()
+        store.dispatch(Action.Back)
+    }
 
     public fun leftLetterPressed() {
         letterPressed(Action.LeftPressed)
@@ -62,7 +72,7 @@ public class ActionCreator @Inject constructor(val store: Store, val wordReposit
             val stringAnswer = answer.map { it.letter }.joinToString("")
             if (gameState.possibleAnswers.contains(stringAnswer)) {
                 store.dispatch(Action.BumpScore)
-                wordRepository.getRandomWord()
+                checkWinSubscription = wordRepository.getRandomWord()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
