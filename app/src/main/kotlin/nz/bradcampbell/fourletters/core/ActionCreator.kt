@@ -23,8 +23,8 @@ public class ActionCreator @Inject constructor(val store: Store, val wordReposit
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                store.dispatch(Action.Navigate(Page(R.layout.game), false))
                 store.dispatch(Action.InitGame( it ))
+                store.dispatch(Action.Navigate(Page(R.layout.game), false))
             }
     }
 
@@ -76,7 +76,7 @@ public class ActionCreator @Inject constructor(val store: Store, val wordReposit
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        store.dispatch(Action.NextGame( it, 15000 ))
+                        store.dispatch(Action.NextGame( it, 5000 ))
                     }
             } else {
                 store.dispatch(Action.ResetGame)

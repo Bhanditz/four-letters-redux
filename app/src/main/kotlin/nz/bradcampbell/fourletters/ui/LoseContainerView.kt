@@ -14,16 +14,22 @@ import javax.inject.Inject
 class LoseContainerView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs), Renderable {
     @Inject lateinit var actionCreator: ActionCreator
 
-    var possibleAnswers: TextView? = null
+    var possibleAnswersView: TextView? = null
+    var loseMessageView: TextView? = null
+
+    var loseMessageTemplate: String? = null
 
     init {
         val app = context?.applicationContext as App
         app.getAppComponent().inject(this)
+
+        loseMessageTemplate = context?.getString(R.string.lose_message)
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        possibleAnswers = findViewById(R.id.possibleWords) as TextView
+        possibleAnswersView = findViewById(R.id.possibleWords) as TextView
+        loseMessageView = findViewById(R.id.loseMessage) as TextView
 
         findViewById(R.id.playAgain).setOnClickListener {
             actionCreator.playAgain()
@@ -35,6 +41,7 @@ class LoseContainerView(context: Context?, attrs: AttributeSet?) : LinearLayout(
     }
 
     override fun render(appState: AppState) {
-        possibleAnswers?.text = appState.gameState?.possibleAnswers?.joinToString()
+        loseMessageView?.text = loseMessageTemplate?.format(appState.gameState?.score)
+        possibleAnswersView?.text = appState.gameState?.possibleAnswers?.joinToString()
     }
 }
