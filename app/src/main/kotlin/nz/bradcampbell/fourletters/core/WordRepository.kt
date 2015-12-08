@@ -22,7 +22,7 @@ class WordRepository @Inject constructor(val app: Application) {
             .flatMap {
                 val str = Observable.just(it)
                 val words = getAllPossibleWords(it)
-                Observable.zip(str, words, { s, w -> Word(Array(4, { Letter(Position.from(it), s[it]) }).toList(), w) })
+                Observable.zip(str, words, { s, w -> Word(s.toListOfLetters(), w) })
             }
     }
 
@@ -76,3 +76,7 @@ fun String.sort(): String {
 }
 
 public data class Word(val letters: List<Letter>, val possibleAnswers: List<String>)
+
+public fun String.toListOfLetters(): List<Letter> {
+    return Array(4, { Letter(Position.from(it), this[it]) }).toList()
+}

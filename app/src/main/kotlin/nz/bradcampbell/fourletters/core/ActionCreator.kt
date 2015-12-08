@@ -17,6 +17,7 @@ public class ActionCreator @Inject constructor(val store: Store, val wordReposit
     public companion object {
         public var GAME_DURATION = 20000L
         public var TIME_BONUS = 5000L
+        public var POINTS_PER_WIN = 1
     }
 
     public fun initiateGame() {
@@ -81,8 +82,7 @@ public class ActionCreator @Inject constructor(val store: Store, val wordReposit
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        store.dispatch(Action.BumpScore)
-                        store.dispatch(Action.NextGame(it, TIME_BONUS))
+                        store.dispatch(Action.NextGame(it, POINTS_PER_WIN, TIME_BONUS))
                     }
             } else {
                 store.dispatch(Action.ResetGame)
