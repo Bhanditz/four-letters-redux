@@ -14,6 +14,11 @@ public class ActionCreator @Inject constructor(val store: Store, val wordReposit
     private var initGameSubscription: Subscription = Subscriptions.empty()
     private var checkWinSubscription: Subscription = Subscriptions.empty()
 
+    public companion object {
+        public var GAME_DURATION = 20000L
+        public var TIME_BONUS = 5000L
+    }
+
     public fun initiateGame() {
         val startTime = System.currentTimeMillis()
         store.dispatch(Action.Navigate(Page(R.layout.loading)))
@@ -23,7 +28,8 @@ public class ActionCreator @Inject constructor(val store: Store, val wordReposit
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                store.dispatch(Action.InitGame( it ))
+                // TODO: Pull out into clock interface for testability
+                store.dispatch(Action.InitGame(it, System.currentTimeMillis() + GAME_DURATION))
                 store.dispatch(Action.Navigate(Page(R.layout.game), false))
             }
     }
@@ -33,9 +39,8 @@ public class ActionCreator @Inject constructor(val store: Store, val wordReposit
         initiateGame()
     }
 
-    public fun tick() {
-        store.dispatch(Action.Tick)
-        checkLose()
+    public fun gameOver() {
+        store.dispatch(Action.Navigate(Page(R.layout.lose), false))
     }
 
     public fun back() {
@@ -71,24 +76,16 @@ public class ActionCreator @Inject constructor(val store: Store, val wordReposit
         if (answer.size == 4) {
             val stringAnswer = answer.map { it.letter }.joinToString("")
             if (gameState.possibleAnswers.contains(stringAnswer)) {
-                store.dispatch(Action.BumpScore)
+                // TODO: pre-load the next game while the user is playing the current level
                 checkWinSubscription = wordRepository.getRandomWord()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        store.dispatch(Action.NextGame( it, 5000 ))
+                        store.dispatch(Action.BumpScore)
+                        store.dispatch(Action.NextGame(it, TIME_BONUS))
                     }
             } else {
                 store.dispatch(Action.ResetGame)
-            }
-        }
-    }
-
-    private fun checkLose() {
-        var gameState = store.state.gameState
-        gameState?.let {
-            if (gameState.timeRemaining <= 0) {
-                store.dispatch(Action.Navigate(Page(R.layout.lose), false))
             }
         }
     }

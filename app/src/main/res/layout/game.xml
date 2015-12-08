@@ -34,10 +34,12 @@
         android:id="@+id/bottomLetter"
         style="@style/Letter"
         />
-    <TextView
+    <nz.bradcampbell.fourletters.ui.TimeRemainingView
         android:id="@+id/timeRemaining"
         android:layout_marginTop="@dimen/padding_standard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:layout_width="200dp"
+        android:layout_height="8dp"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
         />
 </nz.bradcampbell.fourletters.ui.GameContainerView>

@@ -15,7 +15,8 @@ class GameReducer: Reducer<Action, AppState> {
                     topLetter = action.word.letters[1],
                     rightLetter = action.word.letters[2],
                     bottomLetter = action.word.letters[3],
-                    possibleAnswers = action.word.possibleAnswers
+                    possibleAnswers = action.word.possibleAnswers,
+                    finishTime = action.finishTime
                 ))
             is Action.NextGame -> appState.copy(gameState = appState.gameState!!.copy(
                     answer = emptyList(),
@@ -24,7 +25,7 @@ class GameReducer: Reducer<Action, AppState> {
                     rightLetter = action.word.letters[2],
                     bottomLetter = action.word.letters[3],
                     possibleAnswers = action.word.possibleAnswers,
-                    timeRemaining = appState.gameState.timeRemaining + action.bonusTime
+                    finishTime = appState.gameState.finishTime + action.bonusTime
                 ))
             is Action.LeftPressed -> letterPressed(appState, appState.gameState!!.leftLetter)
             is Action.TopPressed -> letterPressed(appState, appState.gameState!!.topLetter)
@@ -32,7 +33,6 @@ class GameReducer: Reducer<Action, AppState> {
             is Action.BottomPressed -> letterPressed(appState, appState.gameState!!.bottomLetter)
             is Action.BumpScore -> appState.copy(gameState = appState.gameState!!.copy(score = appState.gameState.score + 1))
             is Action.ResetGame -> appState.copy(gameState = appState.gameState!!.copy(answer = emptyList()))
-            is Action.Tick -> appState.copy(gameState = appState.gameState?.copy(timeRemaining = Math.max(appState.gameState.timeRemaining - 16, 0)))
             is Action.Back -> appState.copy(gameState = null)
             else -> appState
         }

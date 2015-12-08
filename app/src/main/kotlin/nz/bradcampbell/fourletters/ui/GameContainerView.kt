@@ -2,6 +2,7 @@ package nz.bradcampbell.fourletters.ui
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import nz.bradcampbell.fourletters.App
@@ -10,11 +11,6 @@ import nz.bradcampbell.fourletters.core.ActionCreator
 import nz.bradcampbell.fourletters.core.Renderable
 import nz.bradcampbell.fourletters.core.AppState
 import nz.bradcampbell.fourletters.core.Position
-import rx.Observable
-import rx.Subscription
-import rx.android.schedulers.AndroidSchedulers
-import rx.subscriptions.Subscriptions
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class GameContainerView(context: Context?, attrs: AttributeSet?) : ViewGroup(context, attrs), Renderable {
@@ -26,30 +22,11 @@ class GameContainerView(context: Context?, attrs: AttributeSet?) : ViewGroup(con
     var top: TextView? = null
     var right: TextView? = null
     var bottom: TextView? = null
-    var timeRemaining: TextView? = null
-
-    private var sub: Subscription = Subscriptions.empty()
+    var timeRemaining: View? = null
 
     init {
         val app = context?.applicationContext as App
         app.getAppComponent().inject(this)
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-
-        sub = Observable.interval(16, TimeUnit.MILLISECONDS)
-            .onBackpressureDrop()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                actionCreator.tick()
-            }
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-
-        sub.unsubscribe()
     }
 
     override fun onFinishInflate() {
@@ -57,26 +34,31 @@ class GameContainerView(context: Context?, attrs: AttributeSet?) : ViewGroup(con
 
         answerView = findViewById(R.id.answer) as TextView
         score = findViewById(R.id.score) as TextView
+        timeRemaining = findViewById(R.id.timeRemaining)
 
-        left = findViewById(R.id.leftLetter) as TextView
-        top = findViewById(R.id.topLetter) as TextView
-        right = findViewById(R.id.rightLetter) as TextView
-        bottom = findViewById(R.id.bottomLetter) as TextView
-
-        timeRemaining = findViewById(R.id.timeRemaining) as TextView
-
-        left!!.setOnClickListener {
+        val leftView = findViewById(R.id.leftLetter) as TextView
+        leftView.setOnClickListener {
             actionCreator.leftLetterPressed()
         }
-        top!!.setOnClickListener {
+        left = leftView
+
+        val topView = findViewById(R.id.topLetter) as TextView
+        topView.setOnClickListener {
             actionCreator.topLetterPressed()
         }
-        right!!.setOnClickListener {
+        top = topView
+
+        val rightView = findViewById(R.id.rightLetter) as TextView
+        rightView.setOnClickListener {
             actionCreator.rightLetterPressed()
         }
-        bottom!!.setOnClickListener {
+        right = rightView
+
+        val bottomView = findViewById(R.id.bottomLetter) as TextView
+        bottomView.setOnClickListener {
             actionCreator.bottomLetterPressed()
         }
+        bottom = bottomView
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -154,7 +136,6 @@ class GameContainerView(context: Context?, attrs: AttributeSet?) : ViewGroup(con
         bottom?.setTextIfNeeded(appState.gameState?.bottomLetter?.letter.toString())
         bottom?.alpha = getAlphaForLetter(appState, Position.BOTTOM)
         score?.setTextIfNeeded("Score: ${appState.gameState?.score.toString()}")
-        timeRemaining?.setTextIfNeeded("Time remaining (ms): ${appState.gameState?.timeRemaining.toString()}")
     }
 
     private fun getAlphaForLetter(appState: AppState, position: Position): Float {

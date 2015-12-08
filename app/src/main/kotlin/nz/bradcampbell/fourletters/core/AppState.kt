@@ -15,4 +15,4 @@ data class GameState(val answer: List<Letter> = emptyList(),
                 val bottomLetter: Letter,
                 val possibleAnswers: List<String>,
                 val score: Int = 0,
-                val timeRemaining: Int = 15000)
+                val finishTime: Long)
