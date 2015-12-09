@@ -1,4 +1,4 @@
-package nz.bradcampbell.fourletters.ui
+package nz.bradcampbell.fourletters.ui.renderables
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,8 +8,9 @@ import android.widget.TextView
 import nz.bradcampbell.fourletters.App
 import nz.bradcampbell.fourletters.R
 import nz.bradcampbell.fourletters.redux.action.ActionCreator
-import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.state.State
 import nz.bradcampbell.fourletters.redux.state.Position
+import nz.bradcampbell.fourletters.ui.Renderable
 import javax.inject.Inject
 
 class GameContainerView(context: Context?, attrs: AttributeSet?) : ViewGroup(context, attrs), Renderable {
@@ -109,7 +110,7 @@ class GameContainerView(context: Context?, attrs: AttributeSet?) : ViewGroup(con
     }
 
     override fun generateDefaultLayoutParams(): LayoutParams? {
-        return MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        return MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
     }
 
     override fun checkLayoutParams(p: LayoutParams?): Boolean {
@@ -124,21 +125,21 @@ class GameContainerView(context: Context?, attrs: AttributeSet?) : ViewGroup(con
         return MarginLayoutParams(p)
     }
 
-    override fun render(appState: AppState) {
-        answerView?.setTextIfNeeded(appState.gameState?.answer?.map { it.letter }?.joinToString(" "))
-        left?.setTextIfNeeded(appState.gameState?.leftLetter?.letter.toString())
-        left?.alpha = getAlphaForLetter(appState, Position.LEFT)
-        top?.setTextIfNeeded(appState.gameState?.topLetter?.letter.toString())
-        top?.alpha = getAlphaForLetter(appState, Position.TOP)
-        right?.setTextIfNeeded(appState.gameState?.rightLetter?.letter.toString())
-        right?.alpha = getAlphaForLetter(appState, Position.RIGHT)
-        bottom?.setTextIfNeeded(appState.gameState?.bottomLetter?.letter.toString())
-        bottom?.alpha = getAlphaForLetter(appState, Position.BOTTOM)
-        score?.setTextIfNeeded("Score: ${appState.gameState?.score.toString()}")
+    override fun render(state: State) {
+        answerView?.setTextIfNeeded(state.gameState?.answer?.map { it.letter }?.joinToString(" "))
+        left?.setTextIfNeeded(state.gameState?.leftLetter?.letter.toString())
+        left?.alpha = getAlphaForLetter(state, Position.LEFT)
+        top?.setTextIfNeeded(state.gameState?.topLetter?.letter.toString())
+        top?.alpha = getAlphaForLetter(state, Position.TOP)
+        right?.setTextIfNeeded(state.gameState?.rightLetter?.letter.toString())
+        right?.alpha = getAlphaForLetter(state, Position.RIGHT)
+        bottom?.setTextIfNeeded(state.gameState?.bottomLetter?.letter.toString())
+        bottom?.alpha = getAlphaForLetter(state, Position.BOTTOM)
+        score?.setTextIfNeeded("Score: ${state.gameState?.score.toString()}")
     }
 
-    private fun getAlphaForLetter(appState: AppState, position: Position): Float {
-        return if (appState.gameState?.answer?.filter { it.position == position }?.size == 0) 1f else 0.25f
+    private fun getAlphaForLetter(state: State, position: Position): Float {
+        return if (state.gameState?.answer?.filter { it.position == position }?.size == 0) 1f else 0.25f
     }
 }
 

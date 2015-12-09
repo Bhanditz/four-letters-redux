@@ -1,11 +1,11 @@
-package nz.bradcampbell.fourletters
+package nz.bradcampbell.fourletters.tests
 
 import nz.bradcampbell.fourletters.redux.action.Action
 import nz.bradcampbell.fourletters.redux.action.ActionCreator
 import nz.bradcampbell.fourletters.data.Word
 import nz.bradcampbell.fourletters.data.toListOfLetters
 import nz.bradcampbell.fourletters.redux.reducer.GameReducer
-import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.state.State
 import nz.bradcampbell.fourletters.redux.state.GameState
 import nz.bradcampbell.fourletters.redux.state.Letter
 import org.junit.Test
@@ -24,7 +24,7 @@ class GameReducerTests {
 
     @Test public fun testInitGame() {
         val gameReducer = GameReducer()
-        var appState = AppState()
+        var appState = State()
         assertNull(appState.gameState)
         val testWord = Word(testLetters, testPossibleWords)
         val initGameAction = Action.InitGame(testWord, ActionCreator.GAME_DURATION)
@@ -40,14 +40,14 @@ class GameReducerTests {
         assertEquals(appState.gameState?.bottomLetter?.position, bottom.position)
         assertEquals(appState.gameState?.score, 0)
         assertEquals(appState.gameState?.answer, emptyList())
-        assertEquals(appState.gameState?.finishTime, ActionCreator.GAME_DURATION)
+        assertEquals(appState.gameState?.finishTime, ActionCreator.Companion.GAME_DURATION)
         assertEquals(appState.gameState?.possibleAnswers, testPossibleWords)
     }
 
     private fun testAnswerForAction(action: Action, initialAnswer: List<Letter> = emptyList(),
                                   expectedAnswer: List<Letter> = emptyList()) {
         val gameReducer = GameReducer()
-        var appState = AppState(gameState = GameState(
+        var appState = State(gameState = GameState(
             answer = initialAnswer,
             leftLetter = left,
             topLetter = top,
@@ -162,7 +162,7 @@ class GameReducerTests {
 
     @Test public fun testBackClearsGameState() {
         val gameReducer = GameReducer()
-        var appState = AppState(gameState = GameState(
+        var appState = State(gameState = GameState(
             leftLetter = left,
             topLetter = top,
             rightLetter = right,

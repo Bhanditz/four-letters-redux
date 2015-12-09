@@ -2,7 +2,7 @@ package nz.bradcampbell.fourletters.redux.store.internal
 
 import nz.bradcampbell.fourletters.redux.action.Action
 import nz.bradcampbell.fourletters.redux.reducer.RootReducer
-import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.state.State
 import nz.bradcampbell.fourletters.redux.store.Store
 import rx.Observable
 import rx.lang.kotlin.BehaviourSubject
@@ -10,9 +10,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StoreImpl @Inject constructor(val reducer: RootReducer) : Store<Action, AppState> {
-    var state = AppState()
-    val subject = BehaviourSubject<AppState>()
+class StoreImpl @Inject constructor(val reducer: RootReducer) : Store {
+    var state = State()
+    val subject = BehaviourSubject<State>()
 
     init {
         subject.onNext(state)
@@ -20,7 +20,7 @@ class StoreImpl @Inject constructor(val reducer: RootReducer) : Store<Action, Ap
 
     override fun state() = state
 
-    override fun asObservable(): Observable<AppState> {
+    override fun asObservable(): Observable<State> {
         return subject.asObservable();
     }
 

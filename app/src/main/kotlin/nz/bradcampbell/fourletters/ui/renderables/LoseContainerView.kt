@@ -1,4 +1,4 @@
-package nz.bradcampbell.fourletters.ui
+package nz.bradcampbell.fourletters.ui.renderables
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,7 +7,8 @@ import android.widget.TextView
 import nz.bradcampbell.fourletters.App
 import nz.bradcampbell.fourletters.R
 import nz.bradcampbell.fourletters.redux.action.ActionCreator
-import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.state.State
+import nz.bradcampbell.fourletters.ui.Renderable
 import javax.inject.Inject
 
 class LoseContainerView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs), Renderable {
@@ -39,8 +40,8 @@ class LoseContainerView(context: Context?, attrs: AttributeSet?) : LinearLayout(
         }
     }
 
-    override fun render(appState: AppState) {
-        loseMessageView?.text = loseMessageTemplate?.format(appState.gameState?.score)
-        possibleAnswersView?.text = appState.gameState?.possibleAnswers?.joinToString()
+    override fun render(state: State) {
+        loseMessageView?.text = loseMessageTemplate?.format(state.gameState?.score)
+        possibleAnswersView?.text = state.gameState?.possibleAnswers?.joinToString()
     }
 }

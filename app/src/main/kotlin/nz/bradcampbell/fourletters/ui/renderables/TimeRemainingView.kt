@@ -1,4 +1,4 @@
-package nz.bradcampbell.fourletters.ui
+package nz.bradcampbell.fourletters.ui.renderables
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -9,7 +9,8 @@ import android.view.animation.LinearInterpolator
 import android.widget.ProgressBar
 import nz.bradcampbell.fourletters.App
 import nz.bradcampbell.fourletters.redux.action.ActionCreator
-import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.state.State
+import nz.bradcampbell.fourletters.ui.Renderable
 import javax.inject.Inject
 
 class TimeRemainingView(context: Context?, attrs: AttributeSet?) : ProgressBar(context, attrs), Renderable {
@@ -28,11 +29,11 @@ class TimeRemainingView(context: Context?, attrs: AttributeSet?) : ProgressBar(c
         animation?.cancel()
     }
 
-    override fun render(appState: AppState) {
+    override fun render(state: State) {
         animation?.removeAllListeners()
         animation?.cancel()
 
-        val gameState = appState.gameState!!
+        val gameState = state.gameState!!
         val finishTime = gameState.finishTime
         val currentTime = System.currentTimeMillis()
         val from = Math.min(finishTime - currentTime, ActionCreator.GAME_DURATION)

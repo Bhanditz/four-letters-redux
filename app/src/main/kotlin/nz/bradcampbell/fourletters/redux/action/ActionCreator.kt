@@ -3,7 +3,6 @@ package nz.bradcampbell.fourletters.redux.action
 import nz.bradcampbell.fourletters.R
 import nz.bradcampbell.fourletters.data.Clock
 import nz.bradcampbell.fourletters.data.WordRepository
-import nz.bradcampbell.fourletters.redux.state.AppState
 import nz.bradcampbell.fourletters.redux.state.Page
 import nz.bradcampbell.fourletters.redux.store.Store
 import rx.Subscription
@@ -14,7 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-public class ActionCreator @Inject constructor(val store: Store<Action, AppState>,
+public class ActionCreator @Inject constructor(val store: Store,
                                                val wordRepository: WordRepository,
                                                val clock: Clock) {
     private var initGameSubscription: Subscription = Subscriptions.empty()

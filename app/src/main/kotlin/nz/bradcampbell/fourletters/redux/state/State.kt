@@ -3,7 +3,7 @@ package nz.bradcampbell.fourletters.redux.state
 import android.support.annotation.LayoutRes
 import nz.bradcampbell.fourletters.R
 
-data class AppState(val paginationState: PaginationState = PaginationState(),
+data class State(val paginationState: PaginationState = PaginationState(),
                  val gameState: GameState? = null)
 
 data class PaginationState(val currentPage: Page = Page(R.layout.menu),

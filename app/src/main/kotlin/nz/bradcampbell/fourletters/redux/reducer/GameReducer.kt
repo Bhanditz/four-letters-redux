@@ -3,13 +3,13 @@ package nz.bradcampbell.fourletters.redux.reducer
 import nz.bradcampbell.fourletters.redux.action.Action
 import nz.bradcampbell.fourletters.redux.state.GameState
 import nz.bradcampbell.fourletters.redux.state.Letter
-import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.state.State
 
-class GameReducer: Reducer<Action, AppState> {
+class GameReducer: Reducer<Action, State> {
 
-    override fun call(action: Action, appState: AppState): AppState {
+    override fun call(action: Action, state: State): State {
         return when(action) {
-            is Action.InitGame -> appState.copy(gameState = GameState(
+            is Action.InitGame -> state.copy(gameState = GameState(
                 answer = emptyList(),
                 leftLetter = action.word.letters[0],
                 topLetter = action.word.letters[1],
@@ -18,30 +18,30 @@ class GameReducer: Reducer<Action, AppState> {
                 possibleAnswers = action.word.possibleAnswers,
                 finishTime = action.finishTime
             ))
-            is Action.NextGame -> appState.copy(gameState = appState.gameState!!.copy(
+            is Action.NextGame -> state.copy(gameState = state.gameState!!.copy(
                     answer = emptyList(),
                     leftLetter = action.word.letters[0],
                     topLetter = action.word.letters[1],
                     rightLetter = action.word.letters[2],
                     bottomLetter = action.word.letters[3],
                     possibleAnswers = action.word.possibleAnswers,
-                    finishTime = appState.gameState.finishTime + action.bonusTime,
-                    score = appState.gameState.score + action.points
+                    finishTime = state.gameState.finishTime + action.bonusTime,
+                    score = state.gameState.score + action.points
                 ))
-            is Action.LeftPressed -> letterPressed(appState, appState.gameState!!.leftLetter)
-            is Action.TopPressed -> letterPressed(appState, appState.gameState!!.topLetter)
-            is Action.RightPressed -> letterPressed(appState, appState.gameState!!.rightLetter)
-            is Action.BottomPressed -> letterPressed(appState, appState.gameState!!.bottomLetter)
-            is Action.ResetGame -> appState.copy(gameState = appState.gameState!!.copy(answer = emptyList()))
-            is Action.Back -> appState.copy(gameState = null)
-            else -> appState
+            is Action.LeftPressed -> letterPressed(state, state.gameState!!.leftLetter)
+            is Action.TopPressed -> letterPressed(state, state.gameState!!.topLetter)
+            is Action.RightPressed -> letterPressed(state, state.gameState!!.rightLetter)
+            is Action.BottomPressed -> letterPressed(state, state.gameState!!.bottomLetter)
+            is Action.ResetGame -> state.copy(gameState = state.gameState!!.copy(answer = emptyList()))
+            is Action.Back -> state.copy(gameState = null)
+            else -> state
         }
     }
 
-    private fun letterPressed(appState: AppState, letter: Letter): AppState {
-        val answer = appState.gameState!!.answer
+    private fun letterPressed(state: State, letter: Letter): State {
+        val answer = state.gameState!!.answer
         val isUsed = answer.contains(letter)
         val newAnswer = if (isUsed) answer.filter { it != letter } else answer + letter
-        return appState.copy(gameState = appState.gameState.copy(newAnswer))
+        return state.copy(gameState = state.gameState.copy(newAnswer))
     }
 }

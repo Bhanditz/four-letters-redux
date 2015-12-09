@@ -1,4 +1,4 @@
-package nz.bradcampbell.fourletters;
+package nz.bradcampbell.fourletters.tests;
 
 import static java.util.Collections.singletonList;
 import static junit.framework.Assert.assertEquals;
@@ -8,12 +8,14 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import nz.bradcampbell.fourletters.redux.action.Action;
-import nz.bradcampbell.fourletters.redux.action.ActionCreator;
+import nz.bradcampbell.fourletters.BuildConfig;
+import nz.bradcampbell.fourletters.R;
+import nz.bradcampbell.fourletters.RxJavaResetRule;
 import nz.bradcampbell.fourletters.data.Clock;
 import nz.bradcampbell.fourletters.data.Word;
 import nz.bradcampbell.fourletters.data.WordRepository;
-import nz.bradcampbell.fourletters.redux.state.AppState;
+import nz.bradcampbell.fourletters.redux.action.Action;
+import nz.bradcampbell.fourletters.redux.action.ActionCreator;
 import nz.bradcampbell.fourletters.redux.store.Store;
 import org.junit.Before;
 import org.junit.Rule;
@@ -36,7 +38,7 @@ public class ActionCreatorTests {
 
     private final Word testWord = new Word(toListOfLetters("test"), singletonList("test"));
 
-    private Store<Action, AppState> mockStore;
+    private Store mockStore;
 
     private ActionCreator actionCreator;
 

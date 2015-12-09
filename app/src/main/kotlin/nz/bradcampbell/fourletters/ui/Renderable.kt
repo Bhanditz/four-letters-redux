@@ -1,20 +1,20 @@
 package nz.bradcampbell.fourletters.ui
 
 import android.view.ViewGroup
-import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.state.State
 
 interface Renderable {
-    fun render(appState: AppState)
+    fun render(state: State)
 }
 
-fun ViewGroup.dispatchRender(appState: AppState) {
+fun ViewGroup.dispatchRender(state: State) {
     for (i in 0..childCount - 1) {
         val v = getChildAt(i);
         if (v is Renderable) {
-            v.render(appState)
+            v.render(state)
         }
         if (v is ViewGroup) {
-            v.dispatchRender(appState)
+            v.dispatchRender(state)
         }
     }
 }
