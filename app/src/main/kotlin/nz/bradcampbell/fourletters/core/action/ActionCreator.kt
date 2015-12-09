@@ -1,6 +1,9 @@
-package nz.bradcampbell.fourletters.core
+package nz.bradcampbell.fourletters.core.action
 
 import nz.bradcampbell.fourletters.R
+import nz.bradcampbell.fourletters.core.data.WordRepository
+import nz.bradcampbell.fourletters.core.state.Page
+import nz.bradcampbell.fourletters.core.store.Store
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers

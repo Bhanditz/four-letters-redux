@@ -1,6 +1,7 @@
-package nz.bradcampbell.fourletters.core
+package nz.bradcampbell.fourletters.ui
 
 import android.view.ViewGroup
+import nz.bradcampbell.fourletters.core.state.AppState
 
 interface Renderable {
     fun render(appState: AppState)

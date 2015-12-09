@@ -1,7 +1,13 @@
 package nz.bradcampbell.fourletters
 
-import nz.bradcampbell.fourletters.core.*
-import nz.bradcampbell.fourletters.core.reducers.GameReducer
+import nz.bradcampbell.fourletters.core.action.Action
+import nz.bradcampbell.fourletters.core.action.ActionCreator
+import nz.bradcampbell.fourletters.core.data.Word
+import nz.bradcampbell.fourletters.core.data.toListOfLetters
+import nz.bradcampbell.fourletters.core.reducer.GameReducer
+import nz.bradcampbell.fourletters.core.state.AppState
+import nz.bradcampbell.fourletters.core.state.GameState
+import nz.bradcampbell.fourletters.core.state.Letter
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

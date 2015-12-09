@@ -1,10 +1,10 @@
 package nz.bradcampbell.fourletters
 
-import nz.bradcampbell.fourletters.core.Action
-import nz.bradcampbell.fourletters.core.AppState
-import nz.bradcampbell.fourletters.core.Page
-import nz.bradcampbell.fourletters.core.PaginationState
-import nz.bradcampbell.fourletters.core.reducers.PaginateReducer
+import nz.bradcampbell.fourletters.core.action.Action
+import nz.bradcampbell.fourletters.core.state.AppState
+import nz.bradcampbell.fourletters.core.state.Page
+import nz.bradcampbell.fourletters.core.state.PaginationState
+import nz.bradcampbell.fourletters.core.reducer.PaginateReducer
 import org.junit.Test
 import kotlin.test.assertEquals
 

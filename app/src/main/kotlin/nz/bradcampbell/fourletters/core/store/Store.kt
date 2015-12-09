@@ -1,6 +1,8 @@
-package nz.bradcampbell.fourletters.core
+package nz.bradcampbell.fourletters.core.store
 
-import nz.bradcampbell.fourletters.core.reducers.RootReducer
+import nz.bradcampbell.fourletters.core.action.Action
+import nz.bradcampbell.fourletters.core.reducer.RootReducer
+import nz.bradcampbell.fourletters.core.state.AppState
 import rx.Observable
 import rx.lang.kotlin.BehaviourSubject
 import javax.inject.Inject

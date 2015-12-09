@@ -1,7 +1,7 @@
-package nz.bradcampbell.fourletters.core.reducers
+package nz.bradcampbell.fourletters.core.reducer
 
-import nz.bradcampbell.fourletters.core.Action
-import nz.bradcampbell.fourletters.core.AppState
+import nz.bradcampbell.fourletters.core.action.Action
+import nz.bradcampbell.fourletters.core.state.AppState
 import javax.inject.Inject
 
 class RootReducer @Inject constructor() : Reducer<Action, AppState> {

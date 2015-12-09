@@ -1,23 +1,23 @@
-package nz.bradcampbell.fourletters.core.reducers
+package nz.bradcampbell.fourletters.core.reducer
 
-import nz.bradcampbell.fourletters.core.Action
-import nz.bradcampbell.fourletters.core.GameState
-import nz.bradcampbell.fourletters.core.Letter
-import nz.bradcampbell.fourletters.core.AppState
+import nz.bradcampbell.fourletters.core.action.Action
+import nz.bradcampbell.fourletters.core.state.GameState
+import nz.bradcampbell.fourletters.core.state.Letter
+import nz.bradcampbell.fourletters.core.state.AppState
 
 class GameReducer: Reducer<Action, AppState> {
 
     override fun call(action: Action, appState: AppState): AppState {
         return when(action) {
             is Action.InitGame -> appState.copy(gameState = GameState(
-                    answer = emptyList(),
-                    leftLetter = action.word.letters[0],
-                    topLetter = action.word.letters[1],
-                    rightLetter = action.word.letters[2],
-                    bottomLetter = action.word.letters[3],
-                    possibleAnswers = action.word.possibleAnswers,
-                    finishTime = action.finishTime
-                ))
+                answer = emptyList(),
+                leftLetter = action.word.letters[0],
+                topLetter = action.word.letters[1],
+                rightLetter = action.word.letters[2],
+                bottomLetter = action.word.letters[3],
+                possibleAnswers = action.word.possibleAnswers,
+                finishTime = action.finishTime
+            ))
             is Action.NextGame -> appState.copy(gameState = appState.gameState!!.copy(
                     answer = emptyList(),
                     leftLetter = action.word.letters[0],

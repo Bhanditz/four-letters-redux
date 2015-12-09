@@ -8,9 +8,9 @@ import android.util.AttributeSet
 import android.view.animation.LinearInterpolator
 import android.widget.ProgressBar
 import nz.bradcampbell.fourletters.App
-import nz.bradcampbell.fourletters.core.ActionCreator
-import nz.bradcampbell.fourletters.core.AppState
-import nz.bradcampbell.fourletters.core.Renderable
+import nz.bradcampbell.fourletters.core.action.ActionCreator
+import nz.bradcampbell.fourletters.core.state.AppState
+import nz.bradcampbell.fourletters.ui.Renderable
 import javax.inject.Inject
 
 class TimeRemainingView(context: Context?, attrs: AttributeSet?) : ProgressBar(context, attrs), Renderable {

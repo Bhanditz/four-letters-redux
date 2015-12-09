@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import nz.bradcampbell.fourletters.App
-import nz.bradcampbell.fourletters.core.ActionCreator
-import nz.bradcampbell.fourletters.core.Page
-import nz.bradcampbell.fourletters.core.Store
-import nz.bradcampbell.fourletters.core.dispatchRender
+import nz.bradcampbell.fourletters.core.action.ActionCreator
+import nz.bradcampbell.fourletters.core.state.Page
+import nz.bradcampbell.fourletters.core.store.Store
+import nz.bradcampbell.fourletters.ui.dispatchRender
 import rx.Subscription
 import javax.inject.Inject
 

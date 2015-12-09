@@ -1,4 +1,7 @@
-package nz.bradcampbell.fourletters.core
+package nz.bradcampbell.fourletters.core.action
+
+import nz.bradcampbell.fourletters.core.data.Word
+import nz.bradcampbell.fourletters.core.state.Page
 
 sealed class Action {
     class InitGame(val word: Word, val finishTime: Long) : Action()
