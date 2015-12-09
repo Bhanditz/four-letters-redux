@@ -6,8 +6,6 @@ import nz.bradcampbell.fourletters.redux.state.State
 import nz.bradcampbell.fourletters.redux.store.Store
 import rx.Observable
 import rx.lang.kotlin.BehaviourSubject
-import javax.inject.Inject
-import javax.inject.Singleton
 
 class StoreImpl(val reducer: RootReducer) : Store {
     var state = State()
