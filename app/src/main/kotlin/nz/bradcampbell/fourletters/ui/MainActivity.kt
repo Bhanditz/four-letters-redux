@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import nz.bradcampbell.fourletters.App
+import nz.bradcampbell.fourletters.core.action.Action
 import nz.bradcampbell.fourletters.core.action.ActionCreator
+import nz.bradcampbell.fourletters.core.state.AppState
 import nz.bradcampbell.fourletters.core.state.Page
 import nz.bradcampbell.fourletters.core.store.Store
-import nz.bradcampbell.fourletters.ui.dispatchRender
 import rx.Subscription
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
-    @Inject lateinit var store: Store
+    @Inject lateinit var store: Store<Action, AppState>
     @Inject lateinit var actionCreator: ActionCreator
 
     var displayedPage: Page? = null
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (store.state.paginationState.history.size == 0) {
+        if (store.state().paginationState.history.size == 0) {
             super.onBackPressed()
         } else {
             actionCreator.back()
