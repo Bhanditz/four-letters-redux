@@ -23,6 +23,12 @@ class TimeRemainingView(context: Context?, attrs: AttributeSet?) : ProgressBar(c
         app.getAppComponent().inject(this)
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        animation?.removeAllListeners()
+        animation?.cancel()
+    }
+
     override fun render(appState: AppState) {
         animation?.removeAllListeners()
         animation?.cancel()
