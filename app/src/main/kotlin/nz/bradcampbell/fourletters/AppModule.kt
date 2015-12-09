@@ -6,8 +6,6 @@ import dagger.Provides
 import nz.bradcampbell.fourletters.data.Clock
 import nz.bradcampbell.fourletters.data.WordRepository
 import nz.bradcampbell.fourletters.data.internal.WordRepositoryImpl
-import nz.bradcampbell.fourletters.redux.reducer.RootReducer
-import nz.bradcampbell.fourletters.redux.store.internal.StoreImpl
 import nz.bradcampbell.fourletters.redux.store.Store
 import javax.inject.Singleton
 
@@ -22,13 +20,13 @@ class AppModule(private val application: App) {
     @Provides
     @Singleton
     fun provideClock(): Clock {
-        return object : Clock {}
+        return Clock.REAL
     }
 
     @Provides
     @Singleton
-    fun provideStore(rootReducer: RootReducer): Store {
-        return StoreImpl(rootReducer)
+    fun provideStore(): Store {
+        return Store.DEFAULT
     }
 
     @Provides
