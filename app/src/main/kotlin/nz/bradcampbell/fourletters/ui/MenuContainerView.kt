@@ -5,9 +5,8 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import nz.bradcampbell.fourletters.App
 import nz.bradcampbell.fourletters.R
-import nz.bradcampbell.fourletters.core.action.ActionCreator
-import nz.bradcampbell.fourletters.ui.Renderable
-import nz.bradcampbell.fourletters.core.state.AppState
+import nz.bradcampbell.fourletters.redux.action.ActionCreator
+import nz.bradcampbell.fourletters.redux.state.AppState
 import javax.inject.Inject
 
 class MenuContainerView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs), Renderable {

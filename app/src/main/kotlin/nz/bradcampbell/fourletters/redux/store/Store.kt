@@ -1,4 +1,4 @@
-package nz.bradcampbell.fourletters.core.store
+package nz.bradcampbell.fourletters.redux.store
 
 import rx.Observable
 

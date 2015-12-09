@@ -6,9 +6,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import nz.bradcampbell.fourletters.App
 import nz.bradcampbell.fourletters.R
-import nz.bradcampbell.fourletters.core.action.ActionCreator
-import nz.bradcampbell.fourletters.core.state.AppState
-import nz.bradcampbell.fourletters.ui.Renderable
+import nz.bradcampbell.fourletters.redux.action.ActionCreator
+import nz.bradcampbell.fourletters.redux.state.AppState
 import javax.inject.Inject
 
 class LoseContainerView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs), Renderable {

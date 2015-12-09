@@ -1,15 +1,16 @@
-package nz.bradcampbell.fourletters.core.store
+package nz.bradcampbell.fourletters.redux.store.internal
 
-import nz.bradcampbell.fourletters.core.action.Action
-import nz.bradcampbell.fourletters.core.reducer.RootReducer
-import nz.bradcampbell.fourletters.core.state.AppState
+import nz.bradcampbell.fourletters.redux.action.Action
+import nz.bradcampbell.fourletters.redux.reducer.RootReducer
+import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.store.Store
 import rx.Observable
 import rx.lang.kotlin.BehaviourSubject
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppStore @Inject constructor(val reducer: RootReducer) : Store<Action, AppState> {
+class StoreImpl @Inject constructor(val reducer: RootReducer) : Store<Action, AppState> {
     var state = AppState()
     val subject = BehaviourSubject<AppState>()
 

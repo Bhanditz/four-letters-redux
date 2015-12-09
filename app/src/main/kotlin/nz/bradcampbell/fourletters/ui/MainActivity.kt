@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import nz.bradcampbell.fourletters.App
-import nz.bradcampbell.fourletters.core.action.Action
-import nz.bradcampbell.fourletters.core.action.ActionCreator
-import nz.bradcampbell.fourletters.core.state.AppState
-import nz.bradcampbell.fourletters.core.state.Page
-import nz.bradcampbell.fourletters.core.store.Store
+import nz.bradcampbell.fourletters.redux.action.Action
+import nz.bradcampbell.fourletters.redux.action.ActionCreator
+import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.state.Page
+import nz.bradcampbell.fourletters.redux.store.Store
 import rx.Subscription
 import javax.inject.Inject
 

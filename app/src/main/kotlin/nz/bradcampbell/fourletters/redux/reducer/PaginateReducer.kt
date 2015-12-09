@@ -1,9 +1,9 @@
-package nz.bradcampbell.fourletters.core.reducer
+package nz.bradcampbell.fourletters.redux.reducer
 
-import nz.bradcampbell.fourletters.core.action.Action
-import nz.bradcampbell.fourletters.core.state.Page
-import nz.bradcampbell.fourletters.core.state.PaginationState
-import nz.bradcampbell.fourletters.core.state.AppState
+import nz.bradcampbell.fourletters.redux.action.Action
+import nz.bradcampbell.fourletters.redux.state.Page
+import nz.bradcampbell.fourletters.redux.state.PaginationState
+import nz.bradcampbell.fourletters.redux.state.AppState
 
 class PaginateReducer: Reducer<Action, AppState> {
     override fun call(action: Action, appState: AppState): AppState {

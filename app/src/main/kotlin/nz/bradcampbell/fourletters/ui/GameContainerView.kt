@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import nz.bradcampbell.fourletters.App
 import nz.bradcampbell.fourletters.R
-import nz.bradcampbell.fourletters.core.action.ActionCreator
-import nz.bradcampbell.fourletters.core.state.AppState
-import nz.bradcampbell.fourletters.core.state.Position
+import nz.bradcampbell.fourletters.redux.action.ActionCreator
+import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.state.Position
 import javax.inject.Inject
 
 class GameContainerView(context: Context?, attrs: AttributeSet?) : ViewGroup(context, attrs), Renderable {

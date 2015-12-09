@@ -1,7 +1,7 @@
-package nz.bradcampbell.fourletters.core.data
+package nz.bradcampbell.fourletters.data
 
-import nz.bradcampbell.fourletters.core.state.Letter
-import nz.bradcampbell.fourletters.core.state.Position
+import nz.bradcampbell.fourletters.redux.state.Letter
+import nz.bradcampbell.fourletters.redux.state.Position
 import rx.Observable
 import java.util.*
 

@@ -1,4 +1,4 @@
-package nz.bradcampbell.fourletters.core.state
+package nz.bradcampbell.fourletters.redux.state
 
 import android.support.annotation.LayoutRes
 import nz.bradcampbell.fourletters.R

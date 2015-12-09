@@ -1,9 +1,9 @@
-package nz.bradcampbell.fourletters.core.reducer
+package nz.bradcampbell.fourletters.redux.reducer
 
-import nz.bradcampbell.fourletters.core.action.Action
-import nz.bradcampbell.fourletters.core.state.GameState
-import nz.bradcampbell.fourletters.core.state.Letter
-import nz.bradcampbell.fourletters.core.state.AppState
+import nz.bradcampbell.fourletters.redux.action.Action
+import nz.bradcampbell.fourletters.redux.state.GameState
+import nz.bradcampbell.fourletters.redux.state.Letter
+import nz.bradcampbell.fourletters.redux.state.AppState
 
 class GameReducer: Reducer<Action, AppState> {
 

@@ -1,7 +1,7 @@
-package nz.bradcampbell.fourletters.core.action
+package nz.bradcampbell.fourletters.redux.action
 
-import nz.bradcampbell.fourletters.core.data.Word
-import nz.bradcampbell.fourletters.core.state.Page
+import nz.bradcampbell.fourletters.data.Word
+import nz.bradcampbell.fourletters.redux.state.Page
 
 sealed class Action {
     class InitGame(val word: Word, val finishTime: Long) : Action()

@@ -1,4 +1,4 @@
-package nz.bradcampbell.fourletters.core.reducer
+package nz.bradcampbell.fourletters.redux.reducer
 
 interface Reducer<A, S> {
     fun call(action: A, appState: S) : S;

@@ -2,19 +2,19 @@ package nz.bradcampbell.fourletters;
 
 import static java.util.Collections.singletonList;
 import static junit.framework.Assert.assertEquals;
-import static nz.bradcampbell.fourletters.core.data.WordRepositoryKt.toListOfLetters;
+import static nz.bradcampbell.fourletters.data.WordRepositoryKt.toListOfLetters;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import nz.bradcampbell.fourletters.core.action.Action;
-import nz.bradcampbell.fourletters.core.action.ActionCreator;
-import nz.bradcampbell.fourletters.core.data.Clock;
-import nz.bradcampbell.fourletters.core.data.Word;
-import nz.bradcampbell.fourletters.core.data.WordRepository;
-import nz.bradcampbell.fourletters.core.state.AppState;
-import nz.bradcampbell.fourletters.core.store.Store;
+import nz.bradcampbell.fourletters.redux.action.Action;
+import nz.bradcampbell.fourletters.redux.action.ActionCreator;
+import nz.bradcampbell.fourletters.data.Clock;
+import nz.bradcampbell.fourletters.data.Word;
+import nz.bradcampbell.fourletters.data.WordRepository;
+import nz.bradcampbell.fourletters.redux.state.AppState;
+import nz.bradcampbell.fourletters.redux.store.Store;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

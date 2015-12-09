@@ -1,11 +1,11 @@
-package nz.bradcampbell.fourletters.core.action
+package nz.bradcampbell.fourletters.redux.action
 
 import nz.bradcampbell.fourletters.R
-import nz.bradcampbell.fourletters.core.data.Clock
-import nz.bradcampbell.fourletters.core.data.WordRepository
-import nz.bradcampbell.fourletters.core.state.AppState
-import nz.bradcampbell.fourletters.core.state.Page
-import nz.bradcampbell.fourletters.core.store.Store
+import nz.bradcampbell.fourletters.data.Clock
+import nz.bradcampbell.fourletters.data.WordRepository
+import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.state.Page
+import nz.bradcampbell.fourletters.redux.store.Store
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers

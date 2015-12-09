@@ -1,6 +1,7 @@
-package nz.bradcampbell.fourletters.core.data
+package nz.bradcampbell.fourletters.data.internal
 
 import android.app.Application
+import nz.bradcampbell.fourletters.data.*
 import rx.Observable
 import java.io.BufferedReader
 import java.io.InputStreamReader

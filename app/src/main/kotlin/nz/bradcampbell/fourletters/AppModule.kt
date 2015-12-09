@@ -3,14 +3,14 @@ package nz.bradcampbell.fourletters
 import android.app.Application
 import dagger.Module
 import dagger.Provides
-import nz.bradcampbell.fourletters.core.action.Action
-import nz.bradcampbell.fourletters.core.data.Clock
-import nz.bradcampbell.fourletters.core.data.WordRepository
-import nz.bradcampbell.fourletters.core.data.WordRepositoryImpl
-import nz.bradcampbell.fourletters.core.reducer.RootReducer
-import nz.bradcampbell.fourletters.core.state.AppState
-import nz.bradcampbell.fourletters.core.store.AppStore
-import nz.bradcampbell.fourletters.core.store.Store
+import nz.bradcampbell.fourletters.redux.action.Action
+import nz.bradcampbell.fourletters.data.Clock
+import nz.bradcampbell.fourletters.data.WordRepository
+import nz.bradcampbell.fourletters.data.internal.WordRepositoryImpl
+import nz.bradcampbell.fourletters.redux.reducer.RootReducer
+import nz.bradcampbell.fourletters.redux.state.AppState
+import nz.bradcampbell.fourletters.redux.store.internal.StoreImpl
+import nz.bradcampbell.fourletters.redux.store.Store
 import javax.inject.Singleton
 
 @Module
@@ -30,7 +30,7 @@ class AppModule(private val application: App) {
     @Provides
     @Singleton
     fun provideStore(rootReducer: RootReducer): Store<Action, AppState> {
-        return AppStore(rootReducer)
+        return StoreImpl(rootReducer)
     }
 
     @Provides
