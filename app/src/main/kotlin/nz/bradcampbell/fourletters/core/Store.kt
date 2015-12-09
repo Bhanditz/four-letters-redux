@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Singleton
 class Store @Inject constructor(val reducer: RootReducer) {
-    var state = reducer.call(Action.Init, AppState())
+    var state = AppState()
     val subject = BehaviourSubject<AppState>()
 
     init {

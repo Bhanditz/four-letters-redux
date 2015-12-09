@@ -1,7 +1,6 @@
 package nz.bradcampbell.fourletters.core
 
 sealed class Action {
-    object Init : Action()
     class InitGame(val word: Word, val finishTime: Long) : Action()
     class NextGame(val word: Word, val points: Int, val bonusTime: Long): Action()
     object LeftPressed : Action()
