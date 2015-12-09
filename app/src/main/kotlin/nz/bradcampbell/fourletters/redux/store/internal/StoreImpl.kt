@@ -9,8 +9,7 @@ import rx.lang.kotlin.BehaviourSubject
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class StoreImpl @Inject constructor(val reducer: RootReducer) : Store {
+class StoreImpl(val reducer: RootReducer) : Store {
     var state = State()
     val subject = BehaviourSubject<State>()
 
