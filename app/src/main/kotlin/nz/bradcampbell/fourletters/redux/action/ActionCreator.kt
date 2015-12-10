@@ -78,12 +78,17 @@ public class ActionCreator @Inject constructor(val store: Store,
         if (answer.size == 4) {
             val stringAnswer = answer.map { it.letter }.joinToString("")
             if (gameState.possibleAnswers.contains(stringAnswer)) {
-                // TODO: pre-load the next game while the user is playing the current level
                 checkWinSubscription = wordRepository.getRandomWord()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        store.dispatch(Action.NextGame(it, POINTS_PER_WIN, TIME_BONUS))
+                        // Bonus time is TIME_BONUS, but the time bonus addition can never make the finish time be
+                        // greater than GAME_DURATION from now
+                        val oldFinishTime = store.state().gameState!!.finishTime
+                        val timeRemaining = oldFinishTime - clock.millis();
+                        val newFinishTime = clock.millis() + Math.min(timeRemaining + TIME_BONUS, GAME_DURATION)
+                        val bonusTime = newFinishTime - oldFinishTime
+                        store.dispatch(Action.NextGame(it, POINTS_PER_WIN, bonusTime))
                     }
             } else {
                 store.dispatch(Action.ResetGame)

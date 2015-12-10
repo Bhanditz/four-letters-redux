@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.animation.LinearInterpolator
 import android.widget.ProgressBar
 import nz.bradcampbell.fourletters.App
+import nz.bradcampbell.fourletters.data.Clock
 import nz.bradcampbell.fourletters.redux.action.ActionCreator
 import nz.bradcampbell.fourletters.redux.state.State
 import nz.bradcampbell.fourletters.ui.Renderable
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 class TimeRemainingView(context: Context?, attrs: AttributeSet?) : ProgressBar(context, attrs), Renderable {
     @Inject lateinit var actionCreator: ActionCreator
+    @Inject lateinit var clock: Clock
 
     var animation: ValueAnimator? = null
 
@@ -35,8 +37,8 @@ class TimeRemainingView(context: Context?, attrs: AttributeSet?) : ProgressBar(c
 
         val gameState = state.gameState!!
         val finishTime = gameState.finishTime
-        val currentTime = System.currentTimeMillis()
-        val from = Math.min(finishTime - currentTime, ActionCreator.GAME_DURATION)
+        val currentTime = clock.millis()
+        val from = finishTime - currentTime
 
         max = ActionCreator.GAME_DURATION.toInt()
 
