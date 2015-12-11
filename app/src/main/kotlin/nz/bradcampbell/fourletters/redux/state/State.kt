@@ -4,7 +4,8 @@ import android.support.annotation.LayoutRes
 import nz.bradcampbell.fourletters.R
 
 data class State(val paginationState: PaginationState = PaginationState(),
-                 val gameState: GameState? = null)
+                 val gameState: GameState? = null,
+                 val menuState: MenuState = MenuState())
 
 data class PaginationState(val currentPage: Page = Page(R.layout.menu),
                       val history: List<Page> = listOf<Page>())
@@ -17,6 +18,8 @@ data class GameState(val answer: List<Letter> = emptyList(),
                 val possibleAnswers: List<String>,
                 val score: Int = 0,
                 val finishTime: Long)
+
+data class MenuState(val wordErrorDisplayed: Boolean = false)
 
 data class Page(@LayoutRes var layoutId: Int)
 

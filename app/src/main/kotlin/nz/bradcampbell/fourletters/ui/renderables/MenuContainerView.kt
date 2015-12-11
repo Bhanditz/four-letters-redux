@@ -1,5 +1,6 @@
 package nz.bradcampbell.fourletters.ui.renderables
 
+import android.app.AlertDialog
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
@@ -12,6 +13,8 @@ import javax.inject.Inject
 
 class MenuContainerView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs), Renderable {
     @Inject lateinit var actionCreator: ActionCreator
+
+    private var errorMessage: AlertDialog? = null
 
     init {
         val app = context?.applicationContext as App
@@ -26,6 +29,19 @@ class MenuContainerView(context: Context?, attrs: AttributeSet?) : FrameLayout(c
     }
 
     override fun render(state: State) {
+        val menuState = state.menuState;
+        showErrorDialogIfNeeded(menuState.wordErrorDisplayed)
+    }
 
+    private fun showErrorDialogIfNeeded(loadWordError : Boolean) {
+        if (loadWordError && errorMessage?.isShowing ?: true) {
+            val alert = AlertDialog.Builder(context)
+                .setMessage(R.string.error_loading_word)
+                .setPositiveButton(android.R.string.ok, { d, i -> actionCreator.dismissWordLoadError() })
+                .setOnCancelListener { actionCreator.dismissWordLoadError() }
+                .create()
+            alert.show()
+            errorMessage = alert
+        }
     }
 }

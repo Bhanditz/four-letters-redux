@@ -5,4 +5,5 @@
     <string name="lose_message">You scored %s. You could have made:</string>
     <string name="play_again">Play again</string>
     <string name="menu">Menu</string>
+    <string name="error_loading_word">An unexpected error occurred. Please try again later.</string>
 </resources>

@@ -23,6 +23,7 @@ import nz.bradcampbell.fourletters.redux.action.Action;
 import nz.bradcampbell.fourletters.redux.action.ActionCreator;
 import nz.bradcampbell.fourletters.redux.state.GameState;
 import nz.bradcampbell.fourletters.redux.state.Letter;
+import nz.bradcampbell.fourletters.redux.state.MenuState;
 import nz.bradcampbell.fourletters.redux.state.Page;
 import nz.bradcampbell.fourletters.redux.state.PaginationState;
 import nz.bradcampbell.fourletters.redux.state.State;
@@ -51,6 +52,7 @@ public class ActionCreatorTests {
 
     private Store mockStore;
     private Clock mockClock;
+    private WordRepository mockRepository;
 
     private ActionCreator actionCreator;
 
@@ -58,13 +60,13 @@ public class ActionCreatorTests {
         mockClock = mock(Clock.class);
         when(mockClock.millis()).thenReturn(0L);
 
-        WordRepository mockWordRepository = mock(WordRepository.class);
-        when(mockWordRepository.getRandomWord()).thenReturn(Observable.just(testWord));
+        mockRepository = mock(WordRepository.class);
+        when(mockRepository.getRandomWord()).thenReturn(Observable.just(testWord));
 
         //noinspection unchecked
         mockStore = mock(Store.class);
 
-        actionCreator = new ActionCreator(mockStore, mockWordRepository, mockClock);
+        actionCreator = new ActionCreator(mockStore, mockRepository, mockClock);
     }
 
     @Test public void testInitiateGame() {
@@ -195,6 +197,24 @@ public class ActionCreatorTests {
         assertTrue(capturedActions.get(1) instanceof Action.ResetGame);
     }
 
+    @Test public void testLeftLetterPressedWithCorrectAnswerAndErrorOccurs() {
+        when(mockRepository.getRandomWord()).thenReturn(Observable.<Word>error(new Exception()));
+        when(mockStore.state()).thenReturn(createState("test",
+                toListOfLetters("test"),
+                singletonList("test"), 0, 1L));
+
+        actionCreator.leftLetterPressed();
+
+        ArgumentCaptor<Action> actionCaptor = ArgumentCaptor.forClass(Action.class);
+        verify(mockStore, times(3)).dispatch(actionCaptor.capture());
+
+        List<Action> capturedActions = actionCaptor.getAllValues();
+
+        assertEquals(capturedActions.get(0), Action.LeftPressed.INSTANCE);
+        assertEquals(capturedActions.get(1), Action.Back.INSTANCE);
+        assertEquals(capturedActions.get(2), Action.LoadWordError.INSTANCE);
+    }
+
     @Test public void testBonusTimeFullForLeftLetterPressedWithCorrectAnswer() {
         when(mockStore.state()).thenReturn(createState("test",
                 toListOfLetters("test"),
@@ -284,6 +304,24 @@ public class ActionCreatorTests {
 
         assertEquals(capturedActions.get(0), Action.TopPressed.INSTANCE);
         assertTrue(capturedActions.get(1) instanceof Action.ResetGame);
+    }
+
+    @Test public void testTopLetterPressedWithCorrectAnswerAndErrorOccurs() {
+        when(mockRepository.getRandomWord()).thenReturn(Observable.<Word>error(new Exception()));
+        when(mockStore.state()).thenReturn(createState("test",
+                toListOfLetters("test"),
+                singletonList("test"), 0, 1L));
+
+        actionCreator.topLetterPressed();
+
+        ArgumentCaptor<Action> actionCaptor = ArgumentCaptor.forClass(Action.class);
+        verify(mockStore, times(3)).dispatch(actionCaptor.capture());
+
+        List<Action> capturedActions = actionCaptor.getAllValues();
+
+        assertEquals(capturedActions.get(0), Action.TopPressed.INSTANCE);
+        assertEquals(capturedActions.get(1), Action.Back.INSTANCE);
+        assertEquals(capturedActions.get(2), Action.LoadWordError.INSTANCE);
     }
 
     @Test public void testBonusTimeFullForTopLetterPressedWithCorrectAnswer() {
@@ -377,6 +415,24 @@ public class ActionCreatorTests {
         assertTrue(capturedActions.get(1) instanceof Action.ResetGame);
     }
 
+    @Test public void testRightLetterPressedWithCorrectAnswerAndErrorOccurs() {
+        when(mockRepository.getRandomWord()).thenReturn(Observable.<Word>error(new Exception()));
+        when(mockStore.state()).thenReturn(createState("test",
+                toListOfLetters("test"),
+                singletonList("test"), 0, 1L));
+
+        actionCreator.rightLetterPressed();
+
+        ArgumentCaptor<Action> actionCaptor = ArgumentCaptor.forClass(Action.class);
+        verify(mockStore, times(3)).dispatch(actionCaptor.capture());
+
+        List<Action> capturedActions = actionCaptor.getAllValues();
+
+        assertEquals(capturedActions.get(0), Action.RightPressed.INSTANCE);
+        assertEquals(capturedActions.get(1), Action.Back.INSTANCE);
+        assertEquals(capturedActions.get(2), Action.LoadWordError.INSTANCE);
+    }
+
     @Test public void testBonusTimeFullForRightLetterPressedWithCorrectAnswer() {
         when(mockStore.state()).thenReturn(createState("test",
                 toListOfLetters("test"),
@@ -468,6 +524,24 @@ public class ActionCreatorTests {
         assertTrue(capturedActions.get(1) instanceof Action.ResetGame);
     }
 
+    @Test public void testBottomLetterPressedWithCorrectAnswerAndErrorOccurs() {
+        when(mockRepository.getRandomWord()).thenReturn(Observable.<Word>error(new Exception()));
+        when(mockStore.state()).thenReturn(createState("test",
+                toListOfLetters("test"),
+                singletonList("test"), 0, 1L));
+
+        actionCreator.bottomLetterPressed();
+
+        ArgumentCaptor<Action> actionCaptor = ArgumentCaptor.forClass(Action.class);
+        verify(mockStore, times(3)).dispatch(actionCaptor.capture());
+
+        List<Action> capturedActions = actionCaptor.getAllValues();
+
+        assertEquals(capturedActions.get(0), Action.BottomPressed.INSTANCE);
+        assertEquals(capturedActions.get(1), Action.Back.INSTANCE);
+        assertEquals(capturedActions.get(2), Action.LoadWordError.INSTANCE);
+    }
+
     @Test public void testBonusTimeFullForBottomLetterPressedWithCorrectAnswer() {
         when(mockStore.state()).thenReturn(createState("test",
                 toListOfLetters("test"),
@@ -499,6 +573,35 @@ public class ActionCreatorTests {
         assertEquals(nextGameAction.getBonusTime(), 1L);
     }
 
+    @Test public void testInitiateGameError() {
+        when(mockRepository.getRandomWord()).thenReturn(Observable.<Word>error(new Exception()));
+
+        actionCreator.initiateGame();
+
+        ArgumentCaptor<Action> actionCaptor = ArgumentCaptor.forClass(Action.class);
+        verify(mockStore, times(3)).dispatch(actionCaptor.capture());
+
+        List<Action> capturedActions = actionCaptor.getAllValues();
+
+        Action.Navigate firstAction = (Action.Navigate) capturedActions.get(0);
+        assertEquals(firstAction.getPage().getLayoutId(), R.layout.loading);
+        assertEquals(firstAction.getAddToBackStack(), true);
+
+        assertEquals(capturedActions.get(1), Action.Back.INSTANCE);
+        assertEquals(capturedActions.get(2), Action.LoadWordError.INSTANCE);
+    }
+
+    @Test public void testDismissWordLoadError() {
+        actionCreator.dismissWordLoadError();
+
+        ArgumentCaptor<Action> actionCaptor = ArgumentCaptor.forClass(Action.class);
+        verify(mockStore, times(1)).dispatch(actionCaptor.capture());
+
+        List<Action> capturedActions = actionCaptor.getAllValues();
+
+        assertEquals(capturedActions.get(0), Action.DismissLoadWordError.INSTANCE);
+    }
+
     private void verifySingleActionDispatched(Action action) {
         ArgumentCaptor<Action> actionCaptor = ArgumentCaptor.forClass(Action.class);
         verify(mockStore, times(1)).dispatch(actionCaptor.capture());
@@ -514,6 +617,7 @@ public class ActionCreatorTests {
         return new State(
                 new PaginationState(new Page(R.layout.game), singletonList(new Page(R.layout.menu))),
                 new GameState(answer, wordLetters.get(0), wordLetters.get(1), wordLetters.get(2), wordLetters.get(3),
-                              possibleAnswers, score, finishTime));
+                              possibleAnswers, score, finishTime),
+                new MenuState(false));
     }
 }

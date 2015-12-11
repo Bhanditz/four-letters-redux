@@ -30,10 +30,13 @@ public class ActionCreator @Inject constructor(val store: Store,
         initGameSubscription = wordRepository.getRandomWord()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+            .subscribe({
                 store.dispatch(Action.InitGame(it, clock.millis() + GAME_DURATION))
                 store.dispatch(Action.Navigate(Page(R.layout.game), false))
-            }
+            }, {
+                store.dispatch(Action.Back)
+                store.dispatch(Action.LoadWordError)
+            });
     }
 
     public fun playAgain() {
@@ -49,6 +52,10 @@ public class ActionCreator @Inject constructor(val store: Store,
         initGameSubscription.unsubscribe()
         checkWinSubscription.unsubscribe()
         store.dispatch(Action.Back)
+    }
+
+    public fun dismissWordLoadError() {
+        store.dispatch(Action.DismissLoadWordError)
     }
 
     public fun leftLetterPressed() {
@@ -81,7 +88,7 @@ public class ActionCreator @Inject constructor(val store: Store,
                 checkWinSubscription = wordRepository.getRandomWord()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe {
+                    .subscribe({
                         // Bonus time is TIME_BONUS, but the time bonus addition can never make the finish time be
                         // greater than GAME_DURATION from now
                         val oldFinishTime = store.state().gameState!!.finishTime
@@ -89,7 +96,10 @@ public class ActionCreator @Inject constructor(val store: Store,
                         val newFinishTime = clock.millis() + Math.min(timeRemaining + TIME_BONUS, GAME_DURATION)
                         val bonusTime = newFinishTime - oldFinishTime
                         store.dispatch(Action.NextGame(it, POINTS_PER_WIN, bonusTime))
-                    }
+                    }, {
+                        store.dispatch(Action.Back)
+                        store.dispatch(Action.LoadWordError)
+                    })
             } else {
                 store.dispatch(Action.ResetGame)
             }
