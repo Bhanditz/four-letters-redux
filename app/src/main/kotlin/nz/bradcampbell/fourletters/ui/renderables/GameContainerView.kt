@@ -70,41 +70,54 @@ class GameContainerView(context: Context?, attrs: AttributeSet?) : ViewGroup(con
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         val w = r - l
+        val h = b - t
+
+        val answerView = this.answerView!!
+        val scoreView = this.score!!
+        val topView = this.top!!
+        val topViewTopMargin = (topView.layoutParams as MarginLayoutParams).topMargin
+        val leftView = this.left!!
+        val rightView = this.right!!
+        val bottomView = this.bottom!!
+        val timeRemainingView = this.timeRemaining!!
+        val bottomViewTopMargin = (timeRemainingView.layoutParams as MarginLayoutParams).topMargin
+
+        val contentHeight = answerView.measuredHeight +
+                scoreView.measuredHeight +
+                topView.measuredHeight +
+                topViewTopMargin +
+                leftView.measuredHeight +
+                bottomView.measuredHeight +
+                timeRemainingView.measuredHeight +
+                bottomViewTopMargin
+
+        val answerViewTop = (h - contentHeight) / 2 - answerView.measuredHeight
 
         // Layout answer view at the top middle
-        val answerView = this.answerView!!
-        answerView.layout(w / 2 - answerView.measuredWidth / 2, paddingTop,
-            w / 2 + answerView.measuredWidth / 2, paddingTop + answerView.measuredHeight)
+        answerView.layout(w / 2 - answerView.measuredWidth / 2, answerViewTop,
+            w / 2 + answerView.measuredWidth / 2, answerViewTop + answerView.measuredHeight)
 
         // Layout score below answer
-        val scoreView = this.score!!
         scoreView.layout(w / 2 - scoreView.measuredWidth / 2, answerView.bottom,
             w / 2 + scoreView.measuredWidth / 2, answerView.bottom + scoreView.measuredHeight)
 
         // Layout top button below score
-        val topView = this.top!!
-        val topViewTopMargin = (topView.layoutParams as MarginLayoutParams).topMargin
         topView.layout(w / 2 - topView.measuredWidth / 2, scoreView.bottom + topViewTopMargin,
             w / 2 + topView.measuredWidth / 2, scoreView.bottom + topView.measuredHeight + topViewTopMargin)
 
         // Layout left below top on the left side
-        val leftView = this.left!!
         leftView.layout(topView.left - leftView.measuredWidth, topView.bottom, topView.left,
             topView.bottom + leftView.measuredHeight)
 
         // Layout right below top on the right side
-        val rightView = this.right!!
         rightView.layout(topView.right, topView.bottom, topView.right + rightView.measuredWidth,
             topView.bottom + rightView.measuredHeight)
 
         // Layout bottom view below the left/right views in the middle
-        val bottomView = this.bottom!!
         bottomView.layout(w / 2 - bottomView.measuredWidth / 2, rightView.bottom,
             w / 2 + bottomView.measuredWidth / 2, rightView.bottom + bottomView.measuredHeight)
 
         // Layout time remaining below the bottom button
-        val timeRemainingView = this.timeRemaining!!
-        val bottomViewTopMargin = (timeRemainingView.layoutParams as MarginLayoutParams).topMargin
         timeRemainingView.layout(w / 2 - timeRemainingView.measuredWidth / 2, bottomView.bottom + bottomViewTopMargin,
             w / 2 + timeRemainingView.measuredWidth / 2, bottomView.bottom + timeRemainingView.measuredHeight + bottomViewTopMargin)
     }
