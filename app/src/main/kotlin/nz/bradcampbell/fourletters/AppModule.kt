@@ -5,7 +5,10 @@ import dagger.Module
 import dagger.Provides
 import nz.bradcampbell.fourletters.data.Clock
 import nz.bradcampbell.fourletters.data.WordRepository
+import nz.bradcampbell.fourletters.data.WordService
+import nz.bradcampbell.fourletters.data.Random
 import nz.bradcampbell.fourletters.data.internal.WordRepositoryImpl
+import nz.bradcampbell.fourletters.data.internal.WordServiceImpl
 import nz.bradcampbell.fourletters.redux.store.Store
 import javax.inject.Singleton
 
@@ -31,7 +34,19 @@ class AppModule(private val application: App) {
 
     @Provides
     @Singleton
-    fun provideWordRepository(application: Application): WordRepository {
-        return WordRepositoryImpl(application)
+    fun provideWordService(application: Application): WordService {
+        return WordServiceImpl(application)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWordRepository(wordService: WordService, random: Random): WordRepository {
+        return WordRepositoryImpl(wordService, random)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRandom(): Random {
+        return Random.REAL;
     }
 }
