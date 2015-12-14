@@ -22,6 +22,9 @@ import rx.observers.TestSubscriber;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * These tests have to be in Java. Mockito doesn't work well with Kotlin.
+ */
 public class WordRepositoryTests {
 
     private WordService mockWordService;
