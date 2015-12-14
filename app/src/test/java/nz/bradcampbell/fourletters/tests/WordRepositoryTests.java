@@ -79,6 +79,7 @@ public class WordRepositoryTests {
                     }
                 }));
 
+        // Will always return the first word in the list because the "random" mock always returns 0
         Word expectedAnswer = new Word(toListOfLetters("brad"), asList("brad", "bard"));
 
         // Test that the Word is "brad" and has correctly found all the possible answers ("brad" and "bard") and
