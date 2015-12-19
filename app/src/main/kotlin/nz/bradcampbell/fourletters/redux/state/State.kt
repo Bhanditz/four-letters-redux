@@ -1,8 +1,10 @@
 package nz.bradcampbell.fourletters.redux.state
 
 import android.support.annotation.LayoutRes
+import nz.bradcampbell.dataparcel.DataParcel
 import nz.bradcampbell.fourletters.R
 
+@DataParcel
 data class State(val paginationState: PaginationState = PaginationState(),
                  val gameState: GameState? = null,
                  val menuState: MenuState = MenuState())

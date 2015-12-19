@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import nz.bradcampbell.fourletters.App
 import nz.bradcampbell.fourletters.redux.action.ActionCreator
 import nz.bradcampbell.fourletters.redux.state.Page
+import nz.bradcampbell.fourletters.redux.state.StateParcel
 import nz.bradcampbell.fourletters.redux.store.Store
 import rx.Subscription
 import javax.inject.Inject
@@ -32,6 +33,20 @@ class MainActivity : AppCompatActivity() {
             val content = findViewById(android.R.id.content) as ViewGroup
             content.dispatchRender(state)
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putParcelable("store-state", StateParcel.wrap(store.state()))
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val wrapped = savedInstanceState?.getParcelable<StateParcel>("store-state")
+        val s = wrapped?.contents
+        if (s != null) {
+            store.load(s)
+        }
     }
 
     override fun onBackPressed() {

@@ -8,6 +8,7 @@ import rx.lang.kotlin.BehaviourSubject
 
 public interface Store {
     fun state() : State
+    fun load(state: State)
     fun asObservable() : Observable<State>
     fun dispatch(action: Action)
 
@@ -17,6 +18,11 @@ public interface Store {
         val subject = BehaviourSubject<State>()
 
         init {
+            subject.onNext(state)
+        }
+
+        override fun load(state: State) {
+            this.state = state
             subject.onNext(state)
         }
 
