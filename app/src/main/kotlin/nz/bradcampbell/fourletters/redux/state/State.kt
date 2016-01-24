@@ -1,10 +1,12 @@
 package nz.bradcampbell.fourletters.redux.state
 
+import android.os.Parcel
 import android.support.annotation.LayoutRes
 import nz.bradcampbell.dataparcel.DataParcel
+import nz.bradcampbell.dataparcel.TypeAdapter
 import nz.bradcampbell.fourletters.R
 
-@DataParcel
+@DataParcel(typeAdapters = arrayOf(PositionTypeAdapter::class))
 data class State(val paginationState: PaginationState = PaginationState(),
                  val gameState: GameState? = null,
                  val menuState: MenuState = MenuState())
@@ -44,3 +46,13 @@ public enum class Position(val index: Int) {
 }
 
 public data class Letter(val position: Position, val letter: Char)
+
+class PositionTypeAdapter : TypeAdapter<Position> {
+    override fun writeToParcel(value: Position, outParcel: Parcel) {
+        outParcel.writeInt(value.index)
+    }
+
+    override fun readFromParcel(inParcel: Parcel): Position {
+        return Position.from(inParcel.readInt())
+    }
+}
