@@ -9,14 +9,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static rx.Observable.just;
 
+import nz.bradcampbell.fourletters.data.Random;
 import nz.bradcampbell.fourletters.data.Word;
 import nz.bradcampbell.fourletters.data.WordRepository;
 import nz.bradcampbell.fourletters.data.WordService;
-import nz.bradcampbell.fourletters.data.Random;
 import nz.bradcampbell.fourletters.data.internal.WordRepositoryImpl;
 import org.junit.Before;
 import org.junit.Test;
-import rx.functions.Func1;
+import rx.functions.Action0;
 import rx.observers.TestSubscriber;
 
 import java.util.List;
@@ -45,13 +45,11 @@ public class WordRepositoryTests {
 
         // Set up mocks
         List<String> mockWords = asList("cool", "bean", "test");
-        when(mockWordService.getAllWords()).thenReturn(just(mockWords).map(
-                new Func1<List<String>, List<? extends String>>() {
-                    @Override public List<? extends String> call(List<String> strings) {
+        when(mockWordService.getAllWords()).thenReturn(just(mockWords)
+                .doOnCompleted(new Action0() {
+                    @Override public void call() {
                         subscribeCount.getAndIncrement();
-                        return strings;
-                    }
-                }));
+                    }}));
 
         // Verify we haven't subscribed the service yet
         assertEquals(subscribeCount.get(), 0);
@@ -72,12 +70,7 @@ public class WordRepositoryTests {
     @Test public void testWordCreation() {
         // Set up mocks
         List<String> mockWords = asList("brad", "bard", "test");
-        when(mockWordService.getAllWords()).thenReturn(just(mockWords).map(
-                new Func1<List<String>, List<? extends String>>() {
-                    @Override public List<? extends String> call(List<String> strings) {
-                        return strings;
-                    }
-                }));
+        when(mockWordService.getAllWords()).thenReturn(just(mockWords));
 
         // Will always return the first word in the list because the "random" mock always returns 0
         Word expectedAnswer = new Word(toListOfLetters("brad"), asList("brad", "bard"));

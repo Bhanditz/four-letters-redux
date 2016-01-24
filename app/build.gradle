@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "nz.bradcampbell.fourletters"
@@ -29,8 +29,8 @@ kapt {
 }
 
 dependencies {
-    compile files('libs/dataparcel-annotations.jar')
-    kapt files('libs/dataparcel-compiler-all.jar')
+    compile 'com.github.grandstaish.DataParcel:dataparcel:0.9.4'
+    kapt 'com.github.grandstaish.DataParcel:dataparcel-compiler:0.9.4'
 
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
@@ -47,14 +47,14 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
     // Unit testing dependencies
-    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
     testCompile 'org.robolectric:robolectric:3.0'
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
 
 buildscript {
-    ext.kotlin_version = '1.0.0-beta-3595'
+    ext.kotlin_version = '1.0.0-beta-4589'
     repositories {
         mavenCentral()
     }
