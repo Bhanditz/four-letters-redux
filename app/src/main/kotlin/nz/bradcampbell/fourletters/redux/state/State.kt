@@ -5,12 +5,13 @@ import android.support.annotation.LayoutRes
 import nz.bradcampbell.fourletters.R
 import nz.bradcampbell.paperparcel.GlobalTypeAdapter
 import nz.bradcampbell.paperparcel.PaperParcel
+import nz.bradcampbell.paperparcel.PaperParcelable
 import nz.bradcampbell.paperparcel.TypeAdapter
 
 @PaperParcel
 data class State(val paginationState: PaginationState = PaginationState(),
                  val gameState: GameState? = null,
-                 val menuState: MenuState = MenuState())
+                 val menuState: MenuState = MenuState()) : PaperParcelable
 
 data class PaginationState(val currentPage: Page = Page(R.layout.menu),
                       val history: List<Page> = listOf<Page>())
