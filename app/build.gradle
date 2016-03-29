@@ -29,9 +29,9 @@ kapt {
 }
 
 dependencies {
-    compile 'com.github.grandstaish.paperparcel:paperparcel-kotlin:1.0.0-rc1'
-    compile 'com.github.grandstaish.paperparcel:paperparcel:1.0.0-rc1'
-    kapt 'com.github.grandstaish.paperparcel:compiler:1.0.0-rc1'
+    compile 'com.github.grandstaish.paperparcel:paperparcel-kotlin:1.0.0-rc2'
+    compile 'com.github.grandstaish.paperparcel:paperparcel:1.0.0-rc2'
+    kapt 'com.github.grandstaish.paperparcel:compiler:1.0.0-rc2'
 
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'

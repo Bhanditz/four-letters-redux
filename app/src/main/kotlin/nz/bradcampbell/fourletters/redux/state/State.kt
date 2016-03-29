@@ -9,29 +9,59 @@ import nz.bradcampbell.paperparcel.PaperParcelable
 import nz.bradcampbell.paperparcel.TypeAdapter
 
 @PaperParcel
-data class State(val paginationState: PaginationState = PaginationState(),
-                 val gameState: GameState? = null,
-                 val menuState: MenuState = MenuState()) : PaperParcelable {
+data class State(
+  val paginationState: PaginationState = PaginationState(),
+  val gameState: GameState? = null,
+  val menuState: MenuState = MenuState()
+) : PaperParcelable {
   companion object {
     @JvmField val CREATOR = PaperParcelable.Creator(State::class.java)
   }
 }
 
-data class PaginationState(val currentPage: Page = Page(R.layout.menu),
-                      val history: List<Page> = listOf<Page>())
+@PaperParcel
+data class PaginationState(
+  val currentPage: Page = Page(R.layout.menu),
+  val history: List<Page> = listOf<Page>()
+) : PaperParcelable {
+  companion object {
+    @JvmField val CREATOR = PaperParcelable.Creator(PaginationState::class.java)
+  }
+}
 
-data class GameState(val answer: List<Letter> = emptyList(),
-                val leftLetter: Letter,
-                val topLetter: Letter,
-                val rightLetter: Letter,
-                val bottomLetter: Letter,
-                val possibleAnswers: List<String>,
-                val score: Int = 0,
-                val finishTime: Long)
+@PaperParcel
+data class GameState(
+  val answer: List<Letter> = emptyList(),
+  val leftLetter: Letter,
+  val topLetter: Letter,
+  val rightLetter: Letter,
+  val bottomLetter: Letter,
+  val possibleAnswers: List<String>,
+  val score: Int = 0,
+  val finishTime: Long
+) : PaperParcelable {
+  companion object {
+    @JvmField val CREATOR = PaperParcelable.Creator(GameState::class.java)
+  }
+}
 
-data class MenuState(val wordErrorDisplayed: Boolean = false)
+@PaperParcel
+data class MenuState(
+  val wordErrorDisplayed: Boolean = false
+) : PaperParcelable {
+  companion object {
+    @JvmField val CREATOR = PaperParcelable.Creator(MenuState::class.java)
+  }
+}
 
-data class Page(@LayoutRes var layoutId: Int)
+@PaperParcel
+data class Page(
+  @LayoutRes var layoutId: Int
+) : PaperParcelable {
+  companion object {
+    @JvmField val CREATOR = PaperParcelable.Creator(Page::class.java)
+  }
+}
 
 enum class Position(val index: Int) {
     LEFT(0),
@@ -51,11 +81,19 @@ enum class Position(val index: Int) {
     }
 }
 
-data class Letter(val position: Position, val letter: Char)
+@PaperParcel
+data class Letter(
+  val position: Position,
+  val letter: Char
+) : PaperParcelable {
+  companion object {
+    @JvmField val CREATOR = PaperParcelable.Creator(Letter::class.java)
+  }
+}
 
 @DefaultAdapter
 class PositionTypeAdapter : TypeAdapter<Position> {
-    override fun writeToParcel(value: Position, outParcel: Parcel) {
+    override fun writeToParcel(value: Position, outParcel: Parcel, flags: Int) {
         outParcel.writeInt(value.index)
     }
 
