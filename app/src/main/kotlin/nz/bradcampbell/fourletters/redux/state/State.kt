@@ -23,11 +23,7 @@ data class State(
 data class PaginationState(
   val currentPage: Page = Page(R.layout.menu),
   val history: List<Page> = listOf<Page>()
-) : PaperParcelable {
-  companion object {
-    @JvmField val CREATOR = PaperParcelable.Creator(PaginationState::class.java)
-  }
-}
+)
 
 @PaperParcel
 data class GameState(
@@ -39,29 +35,17 @@ data class GameState(
   val possibleAnswers: List<String>,
   val score: Int = 0,
   val finishTime: Long
-) : PaperParcelable {
-  companion object {
-    @JvmField val CREATOR = PaperParcelable.Creator(GameState::class.java)
-  }
-}
+)
 
 @PaperParcel
 data class MenuState(
   val wordErrorDisplayed: Boolean = false
-) : PaperParcelable {
-  companion object {
-    @JvmField val CREATOR = PaperParcelable.Creator(MenuState::class.java)
-  }
-}
+)
 
 @PaperParcel
 data class Page(
   @LayoutRes var layoutId: Int
-) : PaperParcelable {
-  companion object {
-    @JvmField val CREATOR = PaperParcelable.Creator(Page::class.java)
-  }
-}
+)
 
 enum class Position(val index: Int) {
     LEFT(0),
@@ -85,11 +69,7 @@ enum class Position(val index: Int) {
 data class Letter(
   val position: Position,
   val letter: Char
-) : PaperParcelable {
-  companion object {
-    @JvmField val CREATOR = PaperParcelable.Creator(Letter::class.java)
-  }
-}
+)
 
 @DefaultAdapter
 class PositionTypeAdapter : TypeAdapter<Position> {
