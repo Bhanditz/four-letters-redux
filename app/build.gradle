@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "nz.bradcampbell.fourletters"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
     }
@@ -24,17 +25,18 @@ android {
     }
 }
 
-kapt {
-    generateStubs = true
-}
+// Uncomment this to force SNAPSHOTS to refresh
+//configurations.all {
+//    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+//}
 
 dependencies {
-    compile 'com.github.grandstaish.paperparcel:paperparcel-kotlin:1.0.0-rc4'
-    compile 'com.github.grandstaish.paperparcel:paperparcel:1.0.0-rc4'
-    kapt 'com.github.grandstaish.paperparcel:compiler:1.0.0-rc4'
+    compile 'nz.bradcampbell:paperparcel:2.0.0-SNAPSHOT'
+    compile 'nz.bradcampbell:paperparcel-kotlin:2.0.0-SNAPSHOT'
+    kapt 'nz.bradcampbell:paperparcel-compiler:2.0.0-SNAPSHOT'
 
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     //Rx dependencies
@@ -54,10 +56,16 @@ dependencies {
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
 
+repositories {
+    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
+    maven { url "https://oss.jfrog.org/oss-snapshot-local" }
+}
+
 buildscript {
-    ext.kotlin_version = '1.0.1-2'
+    ext.kotlin_version = '1.0.5-eap-66'
     repositories {
         mavenCentral()
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
