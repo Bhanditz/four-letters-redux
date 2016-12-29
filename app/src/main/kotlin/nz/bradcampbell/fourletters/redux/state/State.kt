@@ -1,12 +1,8 @@
 package nz.bradcampbell.fourletters.redux.state
 
-import android.os.Parcel
 import android.support.annotation.LayoutRes
 import nz.bradcampbell.fourletters.R
-import paperparcel.RegisterAdapter
-import paperparcel.PaperParcel
-import paperparcel.PaperParcelable
-import paperparcel.TypeAdapter
+import paperparcel.*
 
 @PaperParcel
 data class State(
@@ -86,13 +82,19 @@ enum class Position(val index: Int) {
   }
 }
 
-@RegisterAdapter
-class PositionTypeAdapter : TypeAdapter<Position> {
-  override fun writeToParcel(value: Position?, dest: Parcel, flags: Int) {
-    dest.writeInt(value!!.index)
-  }
+//class PositionTypeAdapter : TypeAdapter<Position> {
+//  override fun writeToParcel(value: Position?, dest: Parcel, flags: Int) {
+//    dest.writeInt(value!!.index)
+//  }
+//
+//  override fun readFromParcel(inParcel: Parcel): Position {
+//    return Position.from(inParcel.readInt())
+//  }
+//}
 
-  override fun readFromParcel(inParcel: Parcel): Position {
-    return Position.from(inParcel.readInt())
-  }
-}
+//@ProcessorConfig(
+//    adapters = arrayOf(
+//        Adapter(value = PositionTypeAdapter::class, priority = HIGH)
+//    )
+//)
+//interface PaperParcelConfig

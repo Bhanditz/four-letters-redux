@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FourLetters.iml" filepath="$PROJECT_DIR$/FourLetters.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/four-letters-redux.iml" filepath="$PROJECT_DIR$/four-letters-redux.iml" />
     </modules>
   </component>
 </project>
